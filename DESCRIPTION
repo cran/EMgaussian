@@ -3,8 +3,8 @@ Encoding: UTF-8
 Type: Package
 Title: Expectation-Maximization Algorithm for Multivariate Normal
         (Gaussian) with Missing Data
-Version: 0.2.1
-Date: 2024-02-15
+Version: 0.2.2
+Date: 2025-07-24
 Authors@R: 
   c(person(given = c("Carl","F."),
            family = "Falk",
@@ -22,9 +22,9 @@ Imports: Rcpp, matrixcalc, Matrix, lavaan, glasso, glassoFast, caret
 Suggests: testthat (>= 3.0.0), psych, bootnet, qgraph, cglasso
 LinkingTo: Rcpp, RcppArmadillo
 Config/testthat/edition: 3
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 NeedsCompilation: yes
-Packaged: 2024-03-01 15:07:00 UTC; CarlFalkMcGill
+Packaged: 2025-07-24 14:05:16 UTC; CarlFalkMcGill
 Author: Carl F. Falk [cre, aut]
 Repository: CRAN
-Date/Publication: 2024-03-04 10:50:08 UTC
+Date/Publication: 2025-07-24 14:40:14 UTC

@@ -31,8 +31,8 @@
 #' to handle a covariance matrix parameterization such that means and covariances
 #' are the model parameters.
 #' 
-#' For starting values, the function accepts either a list that has \code{mu} and
-#' \code{S} slots corresponding to the starting mean and covariance matrix. This
+#' For starting values, the function accepts either a list that has \code{mustart} and
+#' \code{covstart} slots corresponding to the starting mean and covariance matrix. This
 #' is useful if the user would like to use custom starting values. Otherwise, a
 #' character corresponding to any of the options available in the
 #' \code{\link{startvals.cov}} function will be used to take a guess at starting values.
@@ -40,7 +40,8 @@
 #' @return
 #' A list with the following:
 #' \itemize{
-#'  \item{\code{p.est}: all parameter estimates as a vector (means followed by unique elements of precision matrix).}
+#'  \item{\code{p.est}: all parameter estimates as a vector (means followed by
+#'    unique elements of covariance matrix; each row below diagonal stacked).}
 #'  \item{\code{mu}: estimated means.}
 #'  \item{\code{S}: estimated covariance matrix.}
 #'  \item{\code{it}: number of EM cycles completed.}

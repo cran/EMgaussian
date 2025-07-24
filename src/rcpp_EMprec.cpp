@@ -94,8 +94,7 @@ Rcpp::List EMcycleprec(const Rcpp::NumericMatrix& D, const arma::colvec& muest, 
 double nllprec(const arma::mat d, const arma::colvec muest, const arma::mat kest){
     
     int N = d.n_rows;
-    int J = d.n_cols;
-    
+
     arma::mat kinv = inv(kest);
     
     double nll = 0;
@@ -103,7 +102,7 @@ double nllprec(const arma::mat d, const arma::colvec muest, const arma::mat kest
     for(int i = 0; i<N; i++){
       arma::uvec io = find_finite(d.row(i));
       arma::uvec idx = {static_cast<arma::uword>(i)};
-      nll += (0.5*(log(det(kinv.submat(io,io))) + (d.submat(idx,io).t() - muest(io)).t() * inv(kinv.submat(io,io)) * (d.submat(idx,io).t() - muest(io)) + J*log(2*arma::datum::pi))).eval()(0,0);
+      nll += (0.5*(log(det(kinv.submat(io,io))) + (d.submat(idx,io).t() - muest(io)).t() * inv(kinv.submat(io,io)) * (d.submat(idx,io).t() - muest(io)) + (io.size())*log(2*arma::datum::pi))).eval()(0,0);
     }
     
     return(nll);

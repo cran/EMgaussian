@@ -23,7 +23,7 @@
 #' @param glassoversion Character indicating whether to do regularization (lasso),
 #'   and if so, using which package. "glasso" uses the \code{\link[glasso]{glasso}}
 #'   function and uses the E-step covariance matrix for starting values,
-#'   "glassoFast" uses \code{\link{glassoFast}{glassoFast}} which also
+#'   "glassoFast" uses \code{\link[glassoFast]{glassoFast}} which also
 #'   penalizes the diagonal of the precision matrix by default (glasso does not),
 #'   "glassonostart" also uses \code{\link[glasso]{glasso}} but no "warm" starting
 #'   values.
@@ -39,7 +39,7 @@
 #' However, it can also be used without regularization to just estimate the precision matrix.
 #' 
 #' For starting values for the EM algorithm itself (not at the M-step), the
-#' function accepts either a list that has \code{mu} and \code{S} slots
+#' function accepts either a list that has \code{mustart} and \code{covstart} slots
 #' corresponding to the starting mean and covariance matrix. This is useful if
 #' the user would like to use custom starting values. Otherwise, a character
 #' corresponding to any of the options available in the \code{\link{startvals.cov}}
@@ -51,7 +51,8 @@
 #' @return 
 #' A list with the following:
 #' \itemize{
-#'  \item{\code{p.est}: all parameter estimates as a vector (means followed by unique elements of precision matrix).}
+#'  \item{\code{p.est}: all parameter estimates as a vector (means followed by
+#'    unique elements of precision matrix; each row below diagonal stacked).}
 #'  \item{\code{mu}: estimated means.}
 #'  \item{\code{S}: estimated covariance matrix.}
 #'  \item{\code{K}: estimated precision matrix.}

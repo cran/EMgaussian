@@ -75,13 +75,15 @@
 #' function in conjunction with \code{\link[bootnet]{estimateNetwork}} worked well for both "ebic"
 #' and "kfold" for model selection, though the original article used the \code{\link[glassoFast]{glassoFast}}
 #' package for estimation, which by default penalizes the diagonal of the precision matrix. It seems
-#' slightly more common to not penalize the diagonal. Therefore, the below use \code{\link[glasso]{glasso}};
-#' this approach performed well but occasionally would get stuck while trying to find an optimal solution.
-#' In addition, the two-stage approach studied by Falk and Starr (under review) also performed well, though
-#' not as good as the present function; that approach is available in the bootnet package. Note also that
-#' \code{\link[cglasso]{cglasso}} has an implementation of Städler & Bühlmann (2012), but we found in
-#' simulations with a high proportion of missing data that our implementation was less likely to 
-#' encounter estimation problems.
+#' slightly more common to not penalize the diagonal. The below use \code{\link[glasso]{glasso}},
+#' which has the ability to not penalize the diagonal of the precision matrix. \code{\link[glasso]{glasso}}
+#' appeared to be sensitive to the choice of starting values, sometimes getting stuck if the "pairwise" starting
+#' value approach was used. The most recent set of simulations, in which it did not get stuck,
+#' used the "diag" approach. In addition, the two-stage approach studied by Falk and Starr (under review)
+#' also performed well, though not as well as the present function; that approach is available in
+#' the \code{bootnet} package. Note also that \code{\link[cglasso]{cglasso}} has an implementation
+#' of Städler & Bühlmann (2012), but we found in simulations with a high proportion of missing data
+#' that our implementation was less likely to encounter estimation problems.
 #' 
 #' @references
 #' 
@@ -141,10 +143,16 @@
 #'   rho <- seq(.01,.5,length.out = 50)
 #'   ebic1 <- EMggm(bfi[,1:25], rho = rho, glassoversion = "glasso",
 #'                  rhoselect = "ebic")
+#'                  
+#'   # do NOT penalize diagonal of precision matrix
+#'   ebic1 <- EMggm(bfi[,1:25], rho = rho, glassoversion = "glasso",
+#'                  rhoselect = "ebic",
+#'                  penalize.diagonal = FALSE)                  
 #'   
-#'   # k-fold
+#'   # k-fold, not penalizing diagonal of precision matrix
 #'   kfold1 <- EMggm(bfi[,1:25], rho = rho, glassoversion = "glasso",
-#'                   rhoselect = "kfold")   
+#'                   rhoselect = "kfold",
+#'                  penalize.diagonal = FALSE)   
 #'
 #'   plot(rho, ebic1$crit) # values of EBIC along grid
 #'   plot(rho, kfold1$crit) # values of kfold along grid
@@ -155,9 +163,11 @@
 #'
 #'   # Integration with bootnet package
 #'   ebic2 <- estimateNetwork(bfi[,1:25], fun = EMggm, rho = rho,
-#'                            glassoversion = "glasso", rhoselect = "ebic")
+#'                            glassoversion = "glasso", rhoselect = "ebic",
+#'                            penalize.diagonal = FALSE)
 #'   kfold2 <- estimateNetwork(bfi[,1:25], fun = EMggm, rho = rho,
-#'                            glassoversion = "glasso", rhoselect = "kfold")   
+#'                            glassoversion = "glasso", rhoselect = "kfold",
+#'                            penalize.diagonal = FALSE)   
 #'   
 #'   # ebic2 and kfold2 now do just about anything one could normally do with an
 #'   # object returned from estimateNetwork e.g., plotting
@@ -175,9 +185,11 @@
 #'   rho <- rhogrid(100, method="qgraph", dat = bfi[,1:25])
 #'  
 #'   ebic3 <- estimateNetwork(bfi[,1:25], fun = EMggm, rho=rho,
-#'                            glassoversion = "glasso", rhoselect = "ebic")
+#'                            glassoversion = "glasso", rhoselect = "ebic",
+#'                            penalize.diagonal = FALSE)
 #'   kfold3 <- estimateNetwork(bfi[,1:25], fun = EMggm, rho=rho,
-#'                            glassoversion = "glasso", rhoselect = "kfold")  
+#'                            glassoversion = "glasso", rhoselect = "kfold",
+#'                            penalize.diagonal = FALSE)  
 #'   
 #'   # look at tuning parameter values vs criterion
 #'   plot(ebic3$result$rho, ebic3$result$crit)
